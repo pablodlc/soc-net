@@ -7,9 +7,10 @@ const ReactionSchema = new Schema(
             type: Schema.Types.ObjectId,
             default: () => new Types.ObjectId
         },
-        reactionBody: {
+        reactionText: {
             type: String,
-            required: 'You gotta react for a reaction to occur',
+            required: true,
+            trim: true,
             maxLength: 280
 
         },
@@ -30,12 +31,20 @@ const ReactionSchema = new Schema(
     }
 );
 
-const thoughtSchema = new Schema(
+const ThoughtSchema = new Schema(
     {
+        thoughtId: {
+            type: Schema.Types.ObjectId,
+            default: () => new Types.ObjectId()
+        },
         thoughtText: {
             type: String,
             required: true,
-            maxLength: 280
+            maxlength: 280
+        },
+        username: {
+            type: String,
+            required: true
         },
         createdAt: {
             type: Date,
@@ -52,10 +61,10 @@ const thoughtSchema = new Schema(
     }
 );
 
-thoughtSchema.virtual('reactionCount').get(function () {
+ThoughtSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
 });
 
-const thought = model('thought', thoughtSchema);
+const Thought = model('Thought', ThoughtSchema);
 
 module.exports = Thought;

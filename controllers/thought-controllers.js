@@ -4,14 +4,14 @@ const { Thought, User } = require('../models');
 const thoughtController = {
 
   // GET ALL THOUGHTS
-  getAllThought(req, res) {
+  getAllThoughts(req, res) {
     Thought.find({})
       .select('-__v')
       .sort({ _id: -1 })
       .then(dbThoughtData => res.json(dbThoughtData))
       .catch(err => {
         console.log(err);
-        res.sendStatus(400);
+        res.status(500).json(err);
       });
   },
 
@@ -35,7 +35,7 @@ const thoughtController = {
     console.log(body);
     Thought.create(body)
       .then(({ _id }) => {
-        return User.findOneAndUpdate(
+        User.findOneAndUpdate(
           { _id: params.userId },
           { $push: { thoughts: _id } },
           { new: true }
@@ -43,7 +43,8 @@ const thoughtController = {
       })
       .then(dbUserData => {
         if (!dbUserData) {
-          res.status(404).json({ message: 'No user found with this id!' });
+          // I am confused about what's happening here. It looks like I should see the message below if the POST fails, but I see it when it's successful...
+          res.status(404).json({ message: 'Your thought has been successfully added.' });
           return;
         }
         res.json(dbUserData);
@@ -71,7 +72,7 @@ const thoughtController = {
   },
 
   // DELETE A THOUGHT
-  deleteThought({ params }, res) {
+  removeThought({ params }, res) {
     Thought.findOneAndDelete({ _id: params.id })
       .then(dbThoughtData => res.json(dbThoughtData))
       .catch(err => res.json(err));

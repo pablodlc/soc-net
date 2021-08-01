@@ -40,90 +40,81 @@ This application was written following the guidelines laid out in the provided [
 
 ## Installation
 
-As listed in `package.json`, this application has the following dependencies:  
-![dependencies](./assets/dependencies.jpg)  
-At the root level of the application, open the terminal and run `npm i`.  
-To seed the database in MySql:
+As listed in `package.json`, this application has the following dependencies:
 
--   After the dependencies are installed, open MySql with the command `mysql -u root -p`, where `root` is your user name, followed by a prompt for your MySql password.
--   In the MySql shell, enter the command `source db/schema.sql;`
--   After the database is seeded, enter the command `exit`
+-   Express
+-   Mongoose
 
-To seed the database from the command line, enter the following command in the terminal: `npm run seed`
+At the root level of the application, open the terminal and run either `npm i` or `npm i express mongoose`.  
+![install](./assets/install.gif)
 
 ## Usage
 
-To start the application, open the terminal at the root of the application with and enter the command `npm start`. If successful, the last line of the response in the terminal will be `App listening on port 3001!`. The application can then be opened using an API client or in the browser at [localhost:3001](localhost:3001). The gif in the [**Description**](#description) section demonstrates the application being used on [Insomnia](https://insomnia.rest/).  
-**e-comm** uses basic CRUD routes. The following URLs can fetch their namesake's data from the database.
+[Insomnia](https://insomnia.rest/) is the recommended API client to run **soc-net** (because it's the one I use and the only one I know how to use, currently...).
 
--   [localhost:3001/api/categories](localhost:3001/api/categories)
--   [localhost:3001/api/tags](localhost:3001/api/tags)
--   [localhost:3001/api/products](localhost:3001/api/products)
+##### Usage Directory:
 
-To search for an item by id, use the following URLs, using the correct `id` as the number at the end.
+-   ##### [Starting **soc-net**](#starting)
+-   ##### [User CRUD Routes](#user)
+-   ##### [Friending](#friending)
 
--   [localhost:3001/api/categories/1](localhost:3001/api/categories/1)
--   [localhost:3001/api/tags/2](localhost:3001/api/tags/2)
--   [localhost:3001/api/products/3](localhost:3001/api/products/3)
+### Starting **soc-net**
 
-To create a new item in the database, use the following URLs to `POST` into the corresponding data tables.
+There are three commands to choose from to start the application in the integrated terminal:
 
--   [localhost:3001/api/categories](localhost:3001/api/categories)
--   [localhost:3001/api/tags](localhost:3001/api/tags)
--   [localhost:3001/api/products](localhost:3001/api/products)
+-   `npm start`
+-   `node server`
+-   `nodemon server`  
+    ![start](./assets/start.gif)
 
-Then click on the `Body` dropdown menu below the address bar and select `JSON`. Ensure the URL is set to `categories`, `tags`, or `products` accordingly. Then enter the following JSON in the body and hit send:
+### User CRUD Routes
 
-```js
-{ "category_name": "your category name here" }
-```
+**soc-net** utilizes basic CRUD routes.
 
-```js
-{ "tag_name": "your tag name here" }
-```
+-   GET ALL USERS: make a `GET` request to [localhost:3001/api/users](localhost:3001/api/users)
+-   GET A USER BY ID: make a `GET` request to [localhost:3001/api/users/`{userId}`](localhost:3001/api/users/{userId})
+-   CREATE A USER:
 
-```js
-{
-  "product_name": "your category name here",
-//   `24.99` is a variable below. Enter the appropriate price here
-  "price": 24.99,
-//   `10` is a variable below. Enter the appropriate number of items in stock here.
-  "stock": 10,
-//   `tagIds` is an array associating ids to the product being created. Based on our `tag-seeds.js` file, the numbers in `[1, 2, 3]` below would associate the tags `"rock music"`, `"pop music"`, and `"blue"` with these new `tagsId` array items. The reason those three tags are associated to the new product is because 1, 2, and 3 are their ids, respectively.
-  "tagsId": [1, 2, 3]
-}
-```
+    -   set the Body of the request's text type to JSON and use the following JSON input:
 
-Below is an image from Insomnia demonstrating how to `POST` (create) a new category in **e-com**. Just change the .JSON content accordingly.  
-![post-cat_name](./assets/POST-catName.jpg)
+    ```js
+      {
+        "username": "{ enter username here}",
+        "email": "{ enter user's email address here}
+      }
+    ```
 
-To update an item in **e-comm**, choose the `PUT` route in Insomnia, using the following addresses as examples where the numbers represent ids.
+    -   then make a `POST` request to [localhost:3001/api/users](localhost:3001/api/users)
 
--   [localhost:3001/api/categories/1](localhost:3001/api/categories/1)
--   [localhost:3001/api/tags/2](localhost:3001/api/tags/2)
--   [localhost:3001/api/products/3](localhost:3001/api/products/3)
+-   UPDATE A USER:
 
-Below is an image from Insomnia demonstrating how to `PUT` (update) the `category` with the id of 1.  
-![update by id](./assets/PUT-cat-by-id.jpg)
+    -   set the Body of the request's text type to JSON and use the following JSON input:
 
-To delete from **e-comm**, choose the `DELETE` route in Insomnia, using the following addresses as examples where the numbers represent ids.
+        ```js
+          {
+            "username": "{ enter username here}",
+            "email": "{ enter user's email address here}
+          }
+        ```
 
--   [localhost:3001/api/categories/1](localhost:3001/api/categories/1)
--   [localhost:3001/api/tags/2](localhost:3001/api/tags/2)
--   [localhost:3001/api/products/3](localhost:3001/api/products/3)
+    -   make `PUT` request to [localhost:3001/api/users/`{userId}`](localhost:3001/api/users/{userId})
 
-Below is an image from Insomnia demonstrating how to delete the `tag` with the id of 2.  
-![delete by id](./assets/DELETE-tag-by-id.jpg)
+-   DELETE A USER: make a `DELETE` request to [localhost:3001/api/users/`{userId}`](localhost:3001/api/users/{userId})
+
+### Friending
+
+To add or remove a friend, both the user's and friend's ids are necessary in separate endpoints in the request's URL. The two endpoints are `user/{ user's id }` followed by `friends/{ friend's id }`.
+
+-   ADD A FRIEND: make a `POST` request to [localhost:3001/api/users/`{ user's id }`/friends/`{ friend's id }`]()
+-   REMOVE A FRIEND: make a `DELETE` request to [localhost:3001/api/users/`{ user's id }`/friends/`{ friend's id }`]()
 
 ## Future Developments
-
-I was almost done. I can't delete `Products` yet. That would be the first thing to address when revisiting this application. But as of this submission, I still have some catching up to do in class, so I gotta let it go!
 
 ## Questions?
 
 Please feel free to contact me with any questions or comments, or visit my GitHub to see more of my work.  
 [Contact me by email](mailto:pablodlc@gmail.com)  
 [GitHub User pablodlc](https://github.com/pablodlc)  
-[e-comm GitHub Repo](https://github.com/pablodlc/e-comm)
+[**soc-net** GitHub Repo](https://github.com/pablodlc/soc-net)
 
-**e-comm** made with ❤️ by pablodlc
+**soc-net** made with ❤️ by pablodlc
