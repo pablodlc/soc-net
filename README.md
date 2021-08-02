@@ -2,22 +2,22 @@
 
 ## Description
 
-To view the video demonstration of this application, click this link: [**soc-net**](https://www.youtube.com/watch?v=Tlsy9G_tXI4).
+To view the video demonstration of this application, click this link: [**soc-net**](https://youtu.be/js68-kxVTs0).
 
-**soc-net** is
+**soc-net** is a NoSql, MongooseDB/Express.js powered backend application. The user creates a profile as a `User`. `Users` can post `Thoughts` that other users can read and to which post a `Reaction`. Additionally, `Users` can friend one another, adding each other to their friend arrays.
 
-Or watch the gif below!  
+Or watch the trailer as a gif below!  
 ![soc-net](./assets/soc-net.gif)
 
-This application was written following the guidelines laid out in the provided [User Story](#User%20Story) and [Acceptance Criteria](#Acceptance%20Criteria).
+This application was written following the guidelines laid out in the provided [User Story](#user-story) and [Acceptance Criteria](#acceptance-criteria).
 
 ### Table of Contents
 
--   [User Story](#user%20story)
--   [Acceptance Criteria](#acceptance%20criteria)
+-   [User Story](#user-story)
+-   [Acceptance Criteria](#acceptance-criteria)
 -   [Installation](#installation)
 -   [Usage](#usage)
--   [Future Developments](#future%20developments)
+-   [Future Developments](#future-developments)
 -   [Questions?](#questions)
 
 #### User Story
@@ -52,13 +52,19 @@ At the root level of the application, open the terminal and run either `npm i` o
 
 [Insomnia](https://insomnia.rest/) is the recommended API client to run **soc-net** (because it's the one I use and the only one I know how to use, currently...).
 
-##### Usage Directory:
+#### Usage Directory:
 
--   ##### [Starting **soc-net**](#starting)
--   ##### [User CRUD Routes](#user)
--   ##### [Friending](#friending)
+-   [Starting **soc-net**](#starting-soc-net)
+-   [User CRUD Routes](#user-crud-routes)
+-   [Friending](#friending)
+-   [Thought CRUD Routes](#thought-crud-routes)
+-   [Reactions](#reactions)
 
-### Starting **soc-net**
+---
+
+---
+
+### **Starting soc-net**
 
 There are three commands to choose from to start the application in the integrated terminal:
 
@@ -67,24 +73,37 @@ There are three commands to choose from to start the application in the integrat
 -   `nodemon server`  
     ![start](./assets/start.gif)
 
-### User CRUD Routes
+---
+
+---
+
+### **User CRUD Routes**
 
 **soc-net** utilizes basic CRUD routes.
 
--   GET ALL USERS: make a `GET` request to [localhost:3001/api/users](localhost:3001/api/users)
--   GET A USER BY ID: make a `GET` request to [localhost:3001/api/users/`{userId}`](localhost:3001/api/users/{userId})
+-   GET ALL USERS: make a `GET` request to [localhost:3001/api/users]()
+
+---
+
+-   GET A USER BY ID: make a `GET` request to [localhost:3001/api/users/`{user id}`]()
+
+---
+
 -   CREATE A USER:
+
 
     -   set the Body of the request's text type to JSON and use the following JSON input:
 
     ```js
       {
-        "username": "{ enter username here}",
-        "email": "{ enter user's email address here}
+        "username": "{enter username here}",
+        "email": "{enter user's email address here}
       }
     ```
 
-    -   then make a `POST` request to [localhost:3001/api/users](localhost:3001/api/users)
+    -   then make a `POST` request to [localhost:3001/api/users]()
+
+---
 
 -   UPDATE A USER:
 
@@ -92,23 +111,113 @@ There are three commands to choose from to start the application in the integrat
 
         ```js
           {
-            "username": "{ enter username here}",
-            "email": "{ enter user's email address here}
+            "username": "{enter username here}",
+            "email": "{enter user's email address here}
           }
         ```
 
-    -   make `PUT` request to [localhost:3001/api/users/`{userId}`](localhost:3001/api/users/{userId})
+    -   make `PUT` request to [localhost:3001/api/users/`{user id}`]()
 
--   DELETE A USER: make a `DELETE` request to [localhost:3001/api/users/`{userId}`](localhost:3001/api/users/{userId})
+---
 
-### Friending
+-   DELETE A USER: make a `DELETE` request to [localhost:3001/api/users/`{user id}`]()
 
-To add or remove a friend, both the user's and friend's ids are necessary in separate endpoints in the request's URL. The two endpoints are `user/{ user's id }` followed by `friends/{ friend's id }`.
+---
 
--   ADD A FRIEND: make a `POST` request to [localhost:3001/api/users/`{ user's id }`/friends/`{ friend's id }`]()
--   REMOVE A FRIEND: make a `DELETE` request to [localhost:3001/api/users/`{ user's id }`/friends/`{ friend's id }`]()
+---
+
+### **Friending**
+
+To add or remove a friend, both the user's and friend's ids are necessary for separate endpoints within the request's URL. The two endpoints are `users/{user's id}` followed by `friends/{friend's id}`.
+
+-   ADD A FRIEND: make a `POST` request to [localhost:3001/api/users/`{user's id}`/friends/`{friend's id}`]()
+
+---
+
+-   REMOVE A FRIEND: make a `DELETE` request to [localhost:3001/api/users/`{user's id}`/friends/`{friend's id}`]()
+
+---
+
+---
+
+### **Thought CRUD Routes**
+
+-   GET ALL THOUGHTS: make a `GET` request to [localhost:3001/api/thoughts]().
+
+---
+
+-   GET A THOUGHT BY ID: make a `GET` request to [localhost:3001/api/thoughts/`{thought id}`]()
+
+---
+
+-   CREATE A THOUGHT:
+
+
+    -   Set the Body of the request's text type to JSON and use the following JSON input:
+
+    ```js
+      {
+        "thoughtText": "{enter thought here, max 280 characters}",
+        "username": "{enter username associated to this thought}"
+      }
+    ```
+
+    -   Then make a `POST` request to [localhost:3001/api/thoughts]()
+
+---
+
+-   UPDATE A THOUGHT:
+
+    -   Set the Body of the request's text type to JSON and use the following JSON input:
+
+        ```js
+          {
+            "thoughtText": "{enter updated thought text here}",
+            "username": "{enter username here}",
+            "userId": "{enter user id here}"
+          }
+        ```
+
+    -   Make `PUT` request to [localhost:3001/api/thoughts/`{thought id}`]()
+
+---
+
+-   DELETE A THOUGHT: make a `DELETE` request to [localhost:3001/api/thoughts/`{thought id}`]()
+
+---
+
+---
+
+### **Reactions**
+
+`Thoughts` can have `Reactions`, which are essentially comments on the thoughts.
+
+-   CREATE A REACTION
+
+    -   Set the body type of the request to JSON and use the following JSON input:
+
+    ```js
+      {
+        "reactionText": "{enter reaction text here}",
+        "username": "{enter username here}",
+        "userId": "{enter user id here}"
+      }
+    ```
+
+    -   Make a `POST` request to [localhost:3001/api/thoughts/{thought id}/reactions]()
+
+---
+
+-   DELETE A REACTION: make a `DELETE` request to [localhost:3001/api/thoughts/{thought id}/reaction/{reaction id}]()
+
+---
+
+---
 
 ## Future Developments
+
+Because of time constraints, I'm submitting this assignment unfinished. The `DELETE reaction` functionality does not work. Upon revisitation, that would be the first improvement I would make.  
+Additionally, I did not implement the bonus challenge of the automatic deletion of a deleted user's thoughts.
 
 ## Questions?
 
